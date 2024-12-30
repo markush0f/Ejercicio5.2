@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario 2</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="css/formulario2.css">
+</head>
+<body>
+    <form class="form-container" id="formulario" action="">
+        <p class="form-group">
+            <label class="form-label" for="bultos">Bultos por defecto</label>
+            <input class="form-input" type="text" id="bultos" name="bultos" required>
+        </p>
+        <p class="form-group">
+            <label class="form-label" for="etiqueta">Tipo de etiqueta por defecto</label>
+            <select class="form-select" name="etiqueta" id="etiqueta">
+                <option value="termica">Termica</option>
+                <option value="Adhesiva">Adhesiva</option>
+            </select>
+        </p>
+        <p class="form-group">
+            <label class="form-label" for="IBAN">Nº cuenta bancaria / IBAN</label>
+            <input class="form-input" type="text" id="IBAN" name="IBAN" required>
+        </p>
+        <p class="form-group">
+            <label class="form-label" for="google-maps">Clave API Google Maps</label>
+            <input class="form-input" type="text" id="google-maps" name="google-maps" required>
+        </p>
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" name="compras-clientes" id="compras-clientes">
+            <label class="form-checkbox-label" for="compras-clientes">Activar el enlace de seguimiento en el historial de compras del cliente</label>
+        </p>
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" name="activar-historial-compras" id="activar-historial-compras">
+            <label class="form-checkbox-label" for="activar-historial-compras">Activar el enlace de seguimiento en el historial de compras del cliente</label>
+        </p>
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" id="observaciones-pedido-etiqueta" name="observaciones-pedido-etiqueta">
+            <label class="form-checkbox-label" for="observaciones-pedido-etiqueta">Observaciones del pedido a la etiqueta</label>
+        </p>
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" id="texto-remitente" name="texto-remitente">
+            <label class="form-checkbox-label" for="texto-remitente">Texto alternativo del remitente</label>
+        </p>
+        <div id="texto-alternativo-container" class="form-group" style="display: none;">
+            <label class="form-label" for="texto-etiqueta">Texto alternativo de la etiqueta</label>
+            <input class="form-input" type="text" id="texto-etiqueta" name="texto-etiqueta">
+        </div>
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" name="peso-defecto" id="peso-defecto">
+            <label class="form-checkbox-label" for="peso-defecto">Activar peso por defecto</label>
+        </p>
+        <div id="peso-defecto-container" class="form-group" style="display: none;">
+            <label class="form-label" for="peso-defecto">Peso por defecto (KG)</label>
+            <input type="text" class="form-input" id="peso-defecto" name="peso-defecto">
+        </div>
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" name="dimensiones-defecto" id="dimensiones-defecto">
+            <label class="form-checkbox-label" for="dimensiones-defecto">Activar dimensiones por defecto</label>
+        </p>
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" name="logo-etiquetas" id="logo-etiquetas">
+            <label class="form-checkbox-label" for="logo-etiquetas">Cambiar logo de las etiquetas</label>
+        </p>
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" name="SSL" id="SSL">
+            <label class="form-checkbox-label" for="SSL">Activar Certificado SSL</label>
+        </p>
+
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" name="seguimiento-automatico" id="seguimiento-automatico">
+            <label class="form-checkbox-label" for="seguimiento-automatico">Activar seguimiento automatico</label>
+        </p>
+        <p class="form-group checkbox-container" id="seguimiento-defecto-container" style="display: none;">
+            <input class="form-checkbox" type="checkbox" name="progeso-estado-envio" id="progeso-estado-envio">
+            <label class="form-checkbox-label" for="progeso-estado-envio">Mostrar progreso del estado del envio en la tienda</label>
+        </p>
+
+        <p class="form-group">
+            <label class="form-label" for="envio-pre-registrado">Envío pre-registrado</label>
+            <input class="form-input" type="text" id="envio-pre-registrado" name="envio-pre-registrado" value="Enviado OK Almacén Correos">
+        </p>
+        <p class="form-group">
+            <label class="form-label" for="envio-cancelado">Envío cancelado Correos</label>
+            <input class="form-input" type="text" id="envio-cancelado" name="envio-cancelado" value="Envío cancelado Correos - CEX">
+        </p>
+        <p class="form-group">
+            <label class="form-label" for="envio-curso">Envío en curso</label>
+            <input class="form-input" type="text" id="envio-curso" name="envio-curso" value="Envío en curso Correos - CEX">
+        </p>
+        <p class="form-group">
+            <label class="form-label" for="envio-entregado">Envío entregado Correos - CEX</label>
+            <input class="form-input" type="text" id="envio-entregado" name="envio-entregado" value="Envío entregado Correos - CEX">
+        </p>
+        <p class="form-group">
+            <label class="form-label" for="envio-devuelto">Envío devuelto</label>
+            <input class="form-input" type="text" id="envio-devuelto" name="envio-devuelto" value="Envío devuelto Correos - CEX">
+        </p>
+        <!-- <p class="form-group">
+            <label class="form-label" for="actualizacion-estado">Tiempo de actualizacion de estado</label>
+            <input class="form-range" type="range" name="actualizacion-estado" id="actualizacion-estado" min="1" max="60" value="10">
+            <label class="form-label" for="">... horas</label>
+            <p class="form-note">
+                La hora seleccionada determinará la frecuencia con la que se actualiza el estado de los pedidos.
+            </p>
+        </p>
+        <p class="form-group checkbox-container">
+            <input class="form-checkbox" type="checkbox" name="campo-NIF-checkout" id="campo-NIF-checkout">
+            <label class="form-label" for="campo-NIF-checkout">Añadir campo NIF en el checkout</label>
+        </p> -->
+        <input type="submit" value="Guardar" class="form-button">
+    </form>
+
+    <script>
+        // Función personalizada para validar el IBAN
+        function validarIBAN(iban) {
+            // Eliminar espacios en blanco y convertir a mayúsculas
+            iban = iban.replace(/\s/g, '').toUpperCase();
+
+            // Mover los primeros cuatro caracteres al final
+            const rearrangedIban = iban.slice(4) + iban.slice(0, 4);
+
+            // Convertir letras a números
+            let numericIban = '';
+            for (let i = 0; i < rearrangedIban.length; i++) {
+                let char = rearrangedIban.charAt(i);
+                if (char >= 'A' && char <= 'Z') {
+                    numericIban += (char.charCodeAt(0) - 55).toString(); // A=10, B=11, ..., Z=35
+                } else {
+                    numericIban += char;
+                }
+            }
+
+            // Calcular el módulo 97
+            const remainder = BigInt(numericIban) % 97n;
+
+            return remainder === 1n;
+        }
+
+        $(document).ready(function() {
+            // Añadir validación personalizada a jQuery Validation
+            $.validator.addMethod("iban", function(value, element) {
+                return this.optional(element) || validarIBAN(value);
+            }, "Por favor, ingrese un IBAN válido.");
+
+            // Validación del formulario
+            $("#formulario").validate({
+                rules: {
+                    "IBAN": {
+                        required: true,
+                        iban: true // Validación personalizada para IBAN
+                    },
+                    "google-maps": {
+                        required: true
+                    }
+                },
+                messages: {
+                    "IBAN": {
+                        required: "Por favor, ingrese un IBAN válido",
+                        iban: "Por favor, ingrese un IBAN con formato correcto"
+                    },
+                    "google-maps": {
+                        required: "La clave API de Google Maps es obligatoria"
+                    }
+                }
+            });
+
+            // Mostrar/ocultar elementos de acuerdo con el estado de los checkboxes
+            $("#texto-remitente").change(function() {
+                if ($(this).prop("checked")) {
+                    $("#texto-alternativo-container").show();
+                } else {
+                    $("#texto-alternativo-container").hide();
+                }
+            });
+
+            $("#peso-defecto").change(function() {
+                if ($(this).prop("checked")) {
+                    $("#peso-defecto-container").show();
+                } else {
+                    $("#peso-defecto-container").hide();
+                }
+            });
+
+            $("#seguimiento-automatico").change(function() {
+                if ($(this).prop("checked")) {
+                    $("#seguimiento-defecto-container").show();
+                } else {
+                    $("#seguimiento-defecto-container").hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

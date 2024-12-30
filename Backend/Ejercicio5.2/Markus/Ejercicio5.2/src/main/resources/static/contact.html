@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <!-- Incluir jQuery desde un CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Incluir el plugin de validación jQuery desde un CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+   <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+    <div class="contact-container">
+        <h2>Contact Form</h2>
+        <form id="contactForm">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="name">First Name:</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="surname">Last Name:</label>
+            <input type="text" id="surname" name="surname" required>
+    
+            <label for="job">Job:</label>
+            <input type="text" id="job" name="job" required>
+    
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+    
+            <button type="submit" class="submit">Submit</button>
+        </form>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            $("#contactForm").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    surname: {
+                        required: true,
+                        minlength: 2
+                    },
+                    job: {
+                        required: true,
+                        minlength: 2
+                    },
+                    location: {
+                        required: true,
+                        minlength: 2
+                    }
+                },
+                messages: {
+                    email: {
+                        required: "Por favor, ingresa tu correo electrónico.",
+                        email: "Por favor, ingresa un correo electrónico válido."
+                    },
+                    name: {
+                        required: "Por favor, ingresa tu nombre.",
+                        minlength: "El nombre debe tener al menos 2 caracteres."
+                    },
+                    surname: {
+                        required: "Por favor, ingresa tus apellidos.",
+                        minlength: "Los apellidos deben tener al menos 2 caracteres."
+                    },
+                    job: {
+                        required: "Por favor, ingresa tu empleo.",
+                        minlength: "El empleo debe tener al menos 2 caracteres."
+                    },
+                    location: {
+                        required: "Por favor, ingresa tu localidad.",
+                        minlength: "La localidad debe tener al menos 2 caracteres."
+                    }
+                },
+                errorElement: "div",
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element); 
+                },
+                submitHandler: function(form) {
+                    // Prevenir el envío tradicional del formulario
+                    event.preventDefault();
+                    $.ajax({
+                        url: '/users/contact',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                                email: $('#email').val(),
+                                name: $('#name').val(),
+                                surname: $('#surname').val(),
+                                job: $('#job').val(),
+                                location: $('#location').val()
+                            }),
+                        success: function(response) {
+                            alert('¡Formulario enviado con éxito!');
+                        },
+                        error: function(error) {
+                            alert('Error al enviar el formulario');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

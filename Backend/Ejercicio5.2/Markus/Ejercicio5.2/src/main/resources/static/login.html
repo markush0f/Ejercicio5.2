@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Comment Form</title>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+</head>
+<body>
+    <div class="contact-container">
+        <h2>Comment Form</h2>
+        <form id="commentForm" method="get" action="">
+            <fieldset>
+                <legend>Please provide your name, email address (won't be published), and a comment</legend>
+                <p>
+                    <label for="cname">Name (required, at least 2 characters)</label>
+                    <input id="cname" name="name" type="text" placeholder="Ingresa tu nombre" required>
+                </p>
+                <p>
+                    <label for="cemail">E-Mail (required)</label>
+                    <input id="cemail" name="email" type="text" placeholder="Ingresa tu correo electrónico" required>
+                </p>
+                <p>
+                    <label for="curl">URL (optional)</label>
+                    <input id="curl" name="url" type="text" placeholder="Ingresa tu sitio web (opcional)">
+                </p>
+                <p>
+                    <label for="ccomment">Your comment (required)</label>
+                    <textarea id="ccomment" name="comment" placeholder="Escribe tu comentario aquí" required></textarea>
+                </p>
+                <div class="checkbox-container">
+                    <input type="checkbox" class="checkbox" id="agree" name="agree" required value="true">
+                    <label for="agree">Please agree to our policy</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" class="checkbox" id="newsletter" name="newsletter" value="true"
+                    <label for="newsletter">I'd like to receive the newsletter</label>
+                </div>
+                <p>
+                    <input class="submit" type="submit" value="Submit">
+                </p>
+            </fieldset>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#commentForm").validate({
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    url: {
+                        url: true
+                    },
+                    comment: {
+                        required: true
+                    },
+                    agree: {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Por favor, ingresa tu nombre",
+                        minlength: "El nombre debe tener al menos 2 caracteres"
+                    },
+                    email: {
+                        required: "Por favor, ingresa tu correo electrónico",
+                        email: "Por favor, ingresa un correo electrónico válido"
+                    },
+                    url: {
+                        url: "Por favor, ingresa una URL válida"
+                    },
+                    comment: {
+                        required: "Por favor, ingresa un comentario"
+                    },
+                    agree: {
+                        required: "Debes aceptar nuestra política antes de enviar."
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    if (element.attr("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+            $('#commentForm').on('submit', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/users',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        name: $('#cname').val() ,
+                        email: $('#cemail').val(),
+                        url: $('#curl').val(),
+                        comment: $('#ccomment').val(),
+                        agree: $('#agree').val(),
+                        newsletter: $('#newsletter').val()
+                        }
+                        ),
+                    success: function(response) {
+                        alert('User created successfully!');
+                    },
+                    error: function(error) {
+                        alert('Error creating user');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
