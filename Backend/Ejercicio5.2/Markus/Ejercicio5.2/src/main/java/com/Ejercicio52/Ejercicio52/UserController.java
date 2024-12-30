@@ -20,16 +20,15 @@ public class UserController {
     @PostMapping("")
     public User createUser(@RequestBody UserCreateDto userCreateDto) {
         try {
-            // Log para ver el valor de "agree"
             logger.debug("DTO : {}", userCreateDto);
 
             logger.info("Iniciando metodo createUser");
 
-            // Verificación si el usuario acepta los términos
-            // if (!userCreateDto.getAgree()) {
-            // logger.trace("You must agree to the terms and conditions");
-            // throw new RuntimeException("You must agree to the terms and conditions");
-            // }
+            Verificación si el usuario acepta los términos
+            if (!userCreateDto.getAgree()) {
+            logger.error("You must agree to the terms and conditions");
+            throw new RuntimeException("You must agree to the terms and conditions");
+            }
 
             // Crear el objeto User con los datos recibidos
             logger.debug("Creating user with provided details...");
@@ -44,7 +43,6 @@ public class UserController {
 
             logger.debug("User object created: {}", user);
 
-            logger.debug("Attempting to save user...");
             User savedUser = userRepository.save(user);
 
             logger.debug("User saved successfully: {}", savedUser);
